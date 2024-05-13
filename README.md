@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Sunrise Upgrade Program: First Wave of Missions | AZUKI DApp
 
 ## Getting Started
 
@@ -16,21 +16,57 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Inside the app
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Mission
 
-## Learn More
+<div align='center'>
+    <img src="./screenshots/mission.png">
+</div>
 
-To learn more about Next.js, take a look at the following resources:
+<hr/>
+<br/>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Sunbeam
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+<div align='center'>
+    <img src="./screenshots/sunbeam.png">
+</div>
 
-## Deploy on Vercel
+<hr/>
+<br/>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<div align='center'>
+    <img src="./screenshots/one.png">
+    <p>Screenshot One</p>
+</div>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<br/>
+
+<div align='center'>
+    <img src="./screenshots/two.png">
+    <p>Screenshot Two</p>
+</div>
+
+<div align='center'>
+    <img src="./screenshots/three.png">
+    <p>Screenshot Three</p>
+</div>
+
+<br/>
+
+<div align='center'>
+    <img src="./screenshots/four.png">
+    <p>Screenshot Four</p>
+</div>
+
+<br/>
+
+<div align='center'>
+    <img src="./screenshots/five.png">
+    <p>Screenshot Five</p>
+</div>
+
+<br/>
+
+## Live Version

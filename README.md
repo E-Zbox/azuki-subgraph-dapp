@@ -70,3 +70,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 <br/>
 
 ## Live Version
+
+[Vercel App](https://azuki-subgraph-dapp.vercel.app/)

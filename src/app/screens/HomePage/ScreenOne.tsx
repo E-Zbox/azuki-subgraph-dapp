@@ -8,11 +8,9 @@ import { useTokenMetadataStore } from "@/store";
 // styles
 import {
   Card,
-  CardButton,
   CardInfo,
   CardTitle,
   MainScreenOne,
-  Span,
 } from "@/app/styles/homePage/ScreenOne.styles";
 import { Loader } from "@/app/styles/Loader.styles";
 import {
@@ -23,6 +21,8 @@ import {
 import { screens } from "@/utils/data";
 
 const LOCAL_STORAGE_TOKEN_TRANSFERS = "tokenTransfers";
+
+const LOCAL_STORAGE_LAST_SCROLL_TOP = "0";
 
 const ScreenOne = () => {
   const mainScreenOneRef = useRef() as React.MutableRefObject<HTMLDivElement>;
@@ -82,9 +82,11 @@ const ScreenOne = () => {
   };
 
   const handleInfiniteScroll = () => {
+    const target = mainScreenOneRef.current;
+    // update last scroll position
+    localStorage.setItem(LOCAL_STORAGE_LAST_SCROLL_TOP, `${target.scrollTop}`);
     if (!loadingState) {
-      const target = mainScreenOneRef.current;
-      if (target.scrollHeight - target.clientHeight < target.scrollTop + 2) {
+      if (target.scrollHeight - target.clientHeight < target.scrollTop + 100) {
         setLoadingState(true);
         fetchMoreData();
       }
@@ -112,7 +114,17 @@ const ScreenOne = () => {
         setState(parsedData);
       }
     }
+
     setLoadingState(false);
+
+    const lastScrollTopPosition = Number(
+      localStorage.getItem(LOCAL_STORAGE_LAST_SCROLL_TOP) || "0"
+    );
+
+    mainScreenOneRef.current.scrollTo({
+      behavior: "smooth",
+      top: lastScrollTopPosition,
+    });
   }, []);
 
   useEffect(() => {
@@ -153,6 +165,17 @@ const ScreenOne = () => {
     });
   }, [state]);
 
+  useEffect(() => {
+    if (loadingState) {
+      const { scrollHeight, clientHeight } = mainScreenOneRef.current;
+      mainScreenOneRef.current.scrollTo({
+        behavior: "smooth",
+        top: scrollHeight,
+        left: 0,
+      });
+    }
+  }, [loadingState]);
+
   return (
     <MainScreenOne ref={mainScreenOneRef}>
       <FlexContainer
@@ -181,7 +204,11 @@ const ScreenOne = () => {
         ))}
       </FlexContainer>
       {loadingState == true ? (
-        <Loader src={loaderGif.src} alt={loaderGif.src.substring(0, 11)} />
+        <Loader
+          src={loaderGif.src}
+          alt={loaderGif.src.substring(0, 11)}
+          $size={"60px"}
+        />
       ) : (
         <></>
       )}

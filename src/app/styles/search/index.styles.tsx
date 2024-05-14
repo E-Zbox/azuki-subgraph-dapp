@@ -37,11 +37,12 @@ export const MainSearch = styled.main<IMainSearch>`
       },
     }) => ($onFocus ? "transparent" : `${textColor}33`)};
   overflow: ${({ $onFocus }) => ($onFocus ? "" : "hidden")};
+  z-index: 2;
 `;
 
 export const SearchContainer = styled.div<ISearchContainer>`
   position: ${({ $onFocus }) => ($onFocus ? "absolute" : "")};
-  top: -20px;
+  top: -25px;
   left: 0px;
   height: ${({ $onFocus }) => ($onFocus ? "fit-content" : "100%")};
   width: 100%;
@@ -63,6 +64,7 @@ export const SearchContainer = styled.div<ISearchContainer>`
       primary: { blue },
     },
   }) => ($onFocus ? `3px solid ${blue}` : "")};
+  transform: translate(0, 0);
 `;
 
 export const TextInput = styled.input`

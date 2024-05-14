@@ -1,5 +1,7 @@
 // assets
+import leftButton from "../../public/icons8-less-than-30.png";
 import loaderGif from "../../public/loader.gif";
+import rightButton from "../../public/icons8-greater-than-30.png";
 import theGraphImg from "../../public/the-graph.png";
 import theGraphDiamondImg from "../../public/the-graph-diamond.png";
 import externalLinkImg from "../../public/icons8-external-link.svg";
@@ -13,7 +15,9 @@ export const screens = {
   default: {
     assets: {
       externalLinkImg,
+      leftButton,
       loaderGif,
+      rightButton,
       theGraphDiamondImg,
       theGraphImg,
     },

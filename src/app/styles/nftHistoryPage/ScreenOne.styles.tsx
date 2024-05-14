@@ -17,6 +17,7 @@ interface ITransactionScrollerTab {
 }
 
 interface ITransactionText {
+  $fontSize?: string;
   $fontWeight?: number;
 }
 
@@ -73,7 +74,7 @@ export const EntityButton = styled.button<IEntityButton>`
   margin-left: calc(var(--ten-px) * 1);
   padding: calc(var(--ten-px) * 1) calc(var(--ten-px) * 2.3);
   overflow: hidden;
-  z-index: 2;
+  z-index: 0;
 
   &:active {
     scale: ${({ $selected }) => ($selected ? "1" : "0.85")};
@@ -182,7 +183,7 @@ export const MainTransactionTable = styled.main`
 `;
 
 export const TransactionTable = styled.div`
-  //   height: 90%;
+  height: 390px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -241,10 +242,11 @@ export const TransactionScrollerTab = styled.div<ITransactionScrollerTab>`
 
 export const TransactionText = styled.h3<ITransactionText>`
   //   width: fit-content;
-  flex-wrap: wrap;
   font-family: "Nunito Sans";
+  font-size: ${({ $fontSize }) => $fontSize || ""};
   font-weight: ${({ $fontWeight }) => $fontWeight || "400"};
   padding: calc(var(--ten-px) * 1.5) 0px;
+  text-align: left;
   color: ${({
     theme: {
       primary: { bgColor },

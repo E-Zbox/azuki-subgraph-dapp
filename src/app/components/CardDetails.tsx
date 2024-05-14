@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 // api
 import { ITokenTransferMetadata } from "@/api/interface";
 import { getTokenApprovals, getTokenTransfers } from "@/api/apollo-client";
+// components
+import PaginationBar from "./PaginationBar";
 // store
 import { useNFTApprovalsStore, useNFTTransfersStore } from "@/store";
 // styles
@@ -18,7 +20,6 @@ import {
   TransactionTable,
   TransactionTableTitle,
   TransactionText,
-  TransactionTitle,
 } from "../styles/nftHistoryPage/ScreenOne.styles";
 import { FlexContainer } from "../styles/shared/Container.styles";
 import { CustomLink } from "../styles/shared/Text.styles";
@@ -46,10 +47,15 @@ function CardDetails({
   );
 
   const [approvalsLoadingState, setApprovalsLoadingState] = useState(false);
-  const [transfersLoadingState, setTransfersLoadingState] = useState(false);
   const [columnState, setColumnsState] = useState({
     column_one: "",
     column_two: "",
+  });
+  const [transfersLoadingState, setTransfersLoadingState] = useState(false);
+  const [pageData, setPageData] = useState({
+    page: 1,
+    maxItemsPerPage: 5,
+    totalPages: 0,
   });
 
   const {
@@ -71,23 +77,27 @@ function CardDetails({
                 month > 9 ? month : `0${month}`
               }/${fullDate.getUTCFullYear()}`;
               return (
-                <Transaction key={index}>
-                  <TransactionScrollerTab $width={"100%"}>
-                    <TransactionText>{`${owner.substring(
-                      0,
-                      30
-                    )}...`}</TransactionText>
-                  </TransactionScrollerTab>
-                  <TransactionScrollerTab $width={"100%"}>
-                    <TransactionText>{`${approved.substring(
-                      0,
-                      30
-                    )}...`}</TransactionText>
-                  </TransactionScrollerTab>
-                  <TransactionScrollerTab $width={"300px"}>
-                    <TransactionText>{dateText}</TransactionText>
-                  </TransactionScrollerTab>
-                </Transaction>
+                <>
+                  <Transaction key={index}>
+                    <TransactionScrollerTab $width={"100%"}>
+                      <TransactionText $fontSize="1rem">{`${owner.substring(
+                        0,
+                        35
+                      )}...`}</TransactionText>
+                    </TransactionScrollerTab>
+                    <TransactionScrollerTab $width={"100%"}>
+                      <TransactionText $fontSize="1rem">{`${approved.substring(
+                        0,
+                        35
+                      )}...`}</TransactionText>
+                    </TransactionScrollerTab>
+                    <TransactionScrollerTab $width={"300px"}>
+                      <TransactionText $fontSize="1rem">
+                        {dateText}
+                      </TransactionText>
+                    </TransactionScrollerTab>
+                  </Transaction>
+                </>
               );
             }
           );
@@ -104,23 +114,27 @@ function CardDetails({
                 month > 9 ? month : `0${month}`
               }/${fullDate.getUTCFullYear()}`;
               return (
-                <Transaction key={index}>
-                  <TransactionScrollerTab $width={"100%"}>
-                    <TransactionText>{`${from.substring(
-                      0,
-                      30
-                    )}...`}</TransactionText>
-                  </TransactionScrollerTab>
-                  <TransactionScrollerTab $width={"100%"}>
-                    <TransactionText>{`${to.substring(
-                      0,
-                      30
-                    )}...`}</TransactionText>
-                  </TransactionScrollerTab>
-                  <TransactionScrollerTab $width={"300px"}>
-                    <TransactionText>{dateText}</TransactionText>
-                  </TransactionScrollerTab>
-                </Transaction>
+                <>
+                  <Transaction key={index}>
+                    <TransactionScrollerTab $width={"100%"}>
+                      <TransactionText $fontSize="1rem">{`${from.substring(
+                        0,
+                        35
+                      )}...`}</TransactionText>
+                    </TransactionScrollerTab>
+                    <TransactionScrollerTab $width={"100%"}>
+                      <TransactionText $fontSize="1rem">{`${to.substring(
+                        0,
+                        35
+                      )}...`}</TransactionText>
+                    </TransactionScrollerTab>
+                    <TransactionScrollerTab $width={"300px"}>
+                      <TransactionText $fontSize="1rem">
+                        {dateText}
+                      </TransactionText>
+                    </TransactionScrollerTab>
+                  </Transaction>
+                </>
               );
             }
           );
@@ -128,8 +142,10 @@ function CardDetails({
         break;
       case HREF_TRANSFER:
         if (nftTransfersState[token.tokenId]) {
-          return nftTransfersState[token.tokenId].map(
-            ({ from, to, blockTimestamp }, index) => {
+          const { maxItemsPerPage, page, totalPages } = pageData;
+          return nftTransfersState[token.tokenId]
+            .slice((page - 1) * maxItemsPerPage, page * maxItemsPerPage)
+            .map(({ from, to, blockTimestamp }, index) => {
               const fullDate = new Date(Number(blockTimestamp!) * 1_000);
               const date = fullDate.getDate();
               const month = fullDate.getMonth() + 1;
@@ -137,26 +153,29 @@ function CardDetails({
                 month > 9 ? month : `0${month}`
               }/${fullDate.getUTCFullYear()}`;
               return (
-                <Transaction key={index}>
-                  <TransactionScrollerTab $width={"100%"}>
-                    <TransactionText>{`${from.substring(
-                      0,
-                      30
-                    )}...`}</TransactionText>
-                  </TransactionScrollerTab>
-                  <TransactionScrollerTab $width={"100%"}>
-                    <TransactionText>{`${to.substring(
-                      0,
-                      30
-                    )}...`}</TransactionText>
-                  </TransactionScrollerTab>
-                  <TransactionScrollerTab $width={"300px"}>
-                    <TransactionText>{dateText}</TransactionText>
-                  </TransactionScrollerTab>
-                </Transaction>
+                <>
+                  <Transaction key={index}>
+                    <TransactionScrollerTab $width={"100%"}>
+                      <TransactionText $fontSize="1rem">{`${from.substring(
+                        0,
+                        35
+                      )}...`}</TransactionText>
+                    </TransactionScrollerTab>
+                    <TransactionScrollerTab $width={"100%"}>
+                      <TransactionText $fontSize="1rem">{`${to.substring(
+                        0,
+                        35
+                      )}...`}</TransactionText>
+                    </TransactionScrollerTab>
+                    <TransactionScrollerTab $width={"300px"}>
+                      <TransactionText $fontSize="1rem">
+                        {dateText}
+                      </TransactionText>
+                    </TransactionScrollerTab>
+                  </Transaction>
+                </>
               );
-            }
-          );
+            });
         }
         break;
       default:
@@ -196,6 +215,7 @@ function CardDetails({
       const { data, error, success } = res;
 
       if (success) {
+        console.log({ data, error, success });
         setNFTTransfersState({ [token.tokenId]: data });
       }
     });
@@ -235,6 +255,7 @@ function CardDetails({
           const { data, error, success } = res;
 
           if (success) {
+            console.log({ data, error, success });
             setNFTTransfersState({ [token.tokenId]: data });
           }
         });
@@ -250,6 +271,31 @@ function CardDetails({
         break;
     }
   }, [selectedEventHref]);
+
+  useEffect(() => {
+    setPageData((prevState) => ({
+      ...prevState,
+      totalPages:
+        Math.floor(
+          nftApprovalsState[token.tokenId]?.length / pageData.maxItemsPerPage
+        ) || 0,
+    }));
+  }, [nftApprovalsState]);
+
+  useEffect(() => {
+    const state = nftTransfersState[token.tokenId];
+
+    setPageData((prevState) => {
+      const _state = nftTransfersState[token.tokenId];
+      const rem = _state?.length % pageData.maxItemsPerPage == 0 ? 0 : 1;
+      return {
+        ...prevState,
+        totalPages: _state
+          ? Math.floor(_state?.length / pageData.maxItemsPerPage) + rem
+          : 0,
+      };
+    });
+  }, [nftTransfersState]);
 
   return (
     <MainCardDetails>
@@ -278,15 +324,6 @@ function CardDetails({
               <TraitsTitle>Name: </TraitsTitle>
               <TraitsText>{token.name}</TraitsText>
             </FlexContainer>
-            {/* <FlexContainer
-              $alignItems="center"
-              $flexDirection="row"
-              $justifyContent="flex-start"
-              $padding="calc(var(--seven-px)*0.8) 0px"
-            >
-              <TraitsTitle>Traits: </TraitsTitle>
-              <TraitsText>👁️ 👩🏻‍🦰</TraitsText>
-            </FlexContainer> */}
             <FlexContainer
               $alignItems="center"
               $flexDirection="row"
@@ -321,12 +358,12 @@ function CardDetails({
         <TransactionTableTitle>{selectedEventHref}</TransactionTableTitle>
         <TransactionTable>
           <Transaction>
-            <TransactionScrollerTab $width={"80%"}>
+            <TransactionScrollerTab $width={"100%"}>
               <TransactionText $fontWeight={600}>
                 {columnState.column_one}
               </TransactionText>
             </TransactionScrollerTab>
-            <TransactionScrollerTab $width={"80%"}>
+            <TransactionScrollerTab $width={"100%"}>
               <TransactionText $fontWeight={600}>
                 {columnState.column_two}
               </TransactionText>
@@ -336,6 +373,9 @@ function CardDetails({
             </TransactionScrollerTab>
           </Transaction>
           {handleTableRender()}
+          <FlexContainer $height={"100%"} $justifyContent="flex-end">
+            <PaginationBar pageData={pageData} setPageData={setPageData} />
+          </FlexContainer>
         </TransactionTable>
         {approvalsLoadingState == true || transfersLoadingState == true ? (
           <FlexContainer

@@ -6,11 +6,11 @@ interface IMainApp {
 
 export const MainApp = styled.main<IMainApp>`
   width: 100%;
-  // height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   overflow: hidden scroll;
   background: linear-gradient(
       45deg,

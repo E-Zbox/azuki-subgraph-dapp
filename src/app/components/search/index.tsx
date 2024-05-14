@@ -27,7 +27,7 @@ function Search() {
   const textInputRef = useRef();
 
   const [loading, setLoading] = useState(false);
-  const [onFocusState, setOnFocusState] = useState(false);
+  const [onFocusState, setOnFocusState] = useState(true);
   const [formState, setFormState] = useState({ input_search: "#" });
   const [searchResult, setSearchResult] = useState("");
 
@@ -77,18 +77,15 @@ function Search() {
   };
 
   const handleNavigation = async (tokenId: number) => {
-    console.log({ tokenId });
     const { data, error, success } = await getTokenMetadata(tokenId);
 
-    console.log({ data, error, success });
     if (success) {
-      console.log({ data });
       const updatedState = menuState.map((item) => ({
         ...item,
         selected: ITEM_NFT_HISTORY_HREF === item.href,
       }));
       setOnFocusState(false);
-      setSelectedState([data]);
+      setSelectedState([data, ...selectedState]);
       setMenuState(updatedState);
     }
   };
@@ -158,6 +155,20 @@ function Search() {
             onFocus={() => setOnFocusState(true)}
           />
         </FlexContainer>
+        {searchResult.length > 1 ? (
+          <SearchResultContainer $onFocus={onFocusState}>
+            <SearchResultTitle>1 Result found</SearchResultTitle>
+            <SearchResultText
+              onClick={() =>
+                handleNavigation(Number(searchResult.substring(1)))
+              }
+            >
+              Azuki {searchResult}
+            </SearchResultText>
+          </SearchResultContainer>
+        ) : (
+          <></>
+        )}
         {searchHistoryState.length > 0 ? (
           <SearchResultContainer $onFocus={onFocusState}>
             <SearchResultTitle>Recent searches</SearchResultTitle>
@@ -170,20 +181,6 @@ function Search() {
                 Azuki {text}
               </SearchResultText>
             ))}
-          </SearchResultContainer>
-        ) : (
-          <></>
-        )}
-        {searchResult.length > 1 ? (
-          <SearchResultContainer $onFocus={onFocusState}>
-            <SearchResultTitle>1 Result found</SearchResultTitle>
-            <SearchResultText
-              onClick={() =>
-                handleNavigation(Number(searchResult.substring(1)))
-              }
-            >
-              Azuki {searchResult}
-            </SearchResultText>
           </SearchResultContainer>
         ) : (
           <></>

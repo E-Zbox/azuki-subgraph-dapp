@@ -107,4 +107,6 @@ const Dynamic = React.forwardRef<HTMLDivElement>((props, ref) => {
   );
 });
 
+Dynamic.displayName = "Dynamic";
+
 export default Dynamic;

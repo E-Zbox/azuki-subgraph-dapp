@@ -7,7 +7,7 @@ import { useNFTApprovalsStore, useNFTTransfersStore } from "@/store";
 // styles
 import { Loader } from "../styles/Loader.styles";
 import {
-  CardDetails,
+  CardDetails as CardDetailsTag,
   CardPoster,
   MainCardDetails,
   MainTransactionTable,
@@ -30,7 +30,7 @@ import {
   HREF_TRANSFER,
 } from "@/utils/nftHistory";
 
-export default function ({
+function CardDetails({
   selectedEventHref,
   token,
 }: {
@@ -253,7 +253,7 @@ export default function ({
 
   return (
     <MainCardDetails>
-      <CardDetails>
+      <CardDetailsTag>
         <FlexContainer
           $alignItems="flex-end"
           $flexDirection="row"
@@ -316,7 +316,7 @@ export default function ({
             </FlexContainer>
           </FlexContainer>
         </FlexContainer>
-      </CardDetails>
+      </CardDetailsTag>
       <MainTransactionTable>
         <TransactionTableTitle>{selectedEventHref}</TransactionTableTitle>
         <TransactionTable>
@@ -352,3 +352,5 @@ export default function ({
     </MainCardDetails>
   );
 }
+
+export default CardDetails;

@@ -23,7 +23,7 @@ import { screens } from "@/utils/data";
 import { FlexContainer } from "@/app/styles/shared/Container.styles";
 import { ITEM_NFT_HISTORY_HREF } from "@/utils/menu";
 
-const Search = () => {
+function Search() {
   const textInputRef = useRef();
 
   const [loading, setLoading] = useState(false);
@@ -118,7 +118,7 @@ const Search = () => {
     if (!onFocusState) {
       setFormState({ ...formState, input_search: "" });
     }
-  }, [onFocusState]);
+  }, [onFocusState, setFormState]);
 
   useEffect(() => {
     let historyStateCopy = [...searchHistoryState];
@@ -127,7 +127,7 @@ const Search = () => {
     if (searchResult.length > 0) {
       setSearchHistoryState([searchResult, ...historyStateCopy]);
     }
-  }, [searchResult]);
+  }, [searchResult, setSearchHistoryState]);
 
   return (
     <MainSearch
@@ -161,8 +161,9 @@ const Search = () => {
         {searchHistoryState.length > 0 ? (
           <SearchResultContainer $onFocus={onFocusState}>
             <SearchResultTitle>Recent searches</SearchResultTitle>
-            {searchHistoryState.map((text) => (
+            {searchHistoryState.map((text, index) => (
               <SearchResultText
+                key={index}
                 $fontSize="1rem"
                 onClick={() => handleNavigation(Number(text.substring(1)))}
               >
@@ -190,6 +191,6 @@ const Search = () => {
       </SearchContainer>
     </MainSearch>
   );
-};
+}
 
 export default Search;

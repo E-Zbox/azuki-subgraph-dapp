@@ -14,7 +14,7 @@ import { PositionContainer } from "../styles/shared/Container.styles";
 // utils
 import { screens } from "@/utils/data";
 
-const Menu = () => {
+function Menu() {
   const [menuState, setMenuState] = useMenuStore((store) => [
     store.state,
     store.setState,
@@ -89,6 +89,6 @@ const Menu = () => {
       </ItemsContainer>
     </MainMenu>
   );
-};
+}
 
 export default Menu;
